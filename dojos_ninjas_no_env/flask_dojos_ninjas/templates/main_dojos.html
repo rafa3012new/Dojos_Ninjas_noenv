@@ -1,0 +1,52 @@
+{% extends "dojos_ninjas_base.html" %}
+{% block titulo %}Menu Principal de Dojos{% endblock %}
+{% block contenido1%}Menu Principal de Dojos{%endblock%}
+
+{% block contenido2 %}
+   <div class = cuerpo>
+      <div class="columna1">
+         <div class="columna1_titulo"><h2>Nuevo Dojo</h2></div>
+         <form action="/creardojo" method="post" onsubmit="return confirm('Desea grabar el registro del Dojo?');">
+           <div class="columna1_cuerpo">
+             <div><label for="nombre_dojo">Nombre del Dojo :</label></div>
+             <div><input type="text" name="nombre_dojo" id="nombre_dojo" required placeholder="my dojo"></div>
+           </div>
+           <div class="columna1_botonpanel"><button type="submmit">Crear</button></div>
+         </form>
+      </div>
+      <div class="columna2">
+         <div><h2>Todos los Dojos</h2></div>
+         <div class="contenedor_tabla">
+            <table>
+
+                <thead>
+                   <tr>
+                      <th>Nombre del Dojo</th>
+                      <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                  {%if dojos|length > 0%}
+                     {%for i in dojos%}
+                      <tr id="tr-{{i.id}}">
+                         <td><a href="/mostrarninjasdojo/{{i.id}}/{{i.name}}">{{i.name}}</a></td>
+                         <td><button class="boton_especial" onclick="updatePostName({{i.id}},'{{i.name}}', this)">Editar</button></td>
+                         <td><a href="/eliminardojo/{{i.id}}" onclick="return confirm('Desea eliminar el registro?')">Borrar</a></td>
+                      </tr>
+                      {%endfor%}
+                   {%else%}
+                        <tr>
+                           <th colspan="3">No hay Registros para mostrar</th>
+                        </tr>
+                   {%endif%}
+                </tbody>
+            </table>
+
+         </div>
+        <div class="opciones">
+           <div><a href="/insertarninja">Agregar un nuevo Nija</a></div>
+        </div>
+      </div>
+   </div>
+{%endblock%}
